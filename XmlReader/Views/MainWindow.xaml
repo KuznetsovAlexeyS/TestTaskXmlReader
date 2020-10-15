@@ -1,0 +1,57 @@
+﻿<Window x:Class="XmlReader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:XmlReader.Views"
+		mc:Ignorable="d"
+		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="MainWindow" MinHeight="450" Height="450" MinWidth="625" Width="625"
+		DataContext="{StaticResource MainWindowViewModel}">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="60"/>
+				<ColumnDefinition Width="280"/>
+				<ColumnDefinition Width="160"/>
+			</Grid.ColumnDefinitions>
+
+			<Button Grid.Column="0"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Center"
+					Height="30"
+					Command="{Binding OpenFileCommand, Mode=OneWay}"
+					Content="{materialDesign:PackIcon FolderOpen}"/>
+
+			<TextBox Grid.Column="1"
+					 HorizontalAlignment="Center"
+					 Height="30" 
+					 Width="240"
+					 FontSize="16"
+					 Text="{Binding XPathRequest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					 materialDesign:HintAssist.Hint="XPath">
+				<TextBox.InputBindings>
+					<KeyBinding Command="{Binding ApplyXPathRequestCommand}" Key="Enter"/>
+				</TextBox.InputBindings>
+			</TextBox>
+
+			<Button Grid.Column="2" 
+					VerticalAlignment="Center" 
+					HorizontalAlignment="Left"
+					Height="30" 
+					Command="{Binding ApplyXPathRequestCommand, Mode=OneWay}">
+				<Button.Content>
+					<TextBlock Text="Применить"/>
+				</Button.Content>
+			</Button>
+			
+		</Grid>
+		<Grid Grid.Row="1">
+			<views:XmlTreeView DataContext="{Binding XmlTreeViewModel}"/>
+		</Grid>
+	</Grid>
+</Window>
