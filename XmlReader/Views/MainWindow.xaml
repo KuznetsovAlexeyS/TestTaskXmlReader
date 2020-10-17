@@ -10,7 +10,7 @@
 		DataContext="{StaticResource MainWindowViewModel}">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
+			<RowDefinition Height="50"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		<Grid Grid.Row="0">
@@ -27,17 +27,45 @@
 					Command="{Binding OpenFileCommand, Mode=OneWay}"
 					Content="{materialDesign:PackIcon FolderOpen}"/>
 
-			<TextBox Grid.Column="1"
-					 HorizontalAlignment="Center"
-					 Height="30" 
-					 Width="240"
-					 FontSize="16"
-					 Text="{Binding XPathRequest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-					 materialDesign:HintAssist.Hint="XPath">
-				<TextBox.InputBindings>
-					<KeyBinding Command="{Binding ApplyXPathRequestCommand}" Key="Enter"/>
-				</TextBox.InputBindings>
-			</TextBox>
+			<!-- XPath text field and little hidden error message below -->
+			<StackPanel HorizontalAlignment="Center"
+						Grid.Column="1">
+				<TextBox HorizontalAlignment="Center"
+						 Height="30" 
+						 Width="240"
+						 FontSize="16"
+						 Text="{Binding XPathRequest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						 materialDesign:HintAssist.Hint="XPath">
+					<TextBox.InputBindings>
+						<KeyBinding Command="{Binding ApplyXPathRequestCommand}" Key="Enter"/>
+					</TextBox.InputBindings>
+					<TextBox.Style>
+						<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+							<Setter Property="materialDesign:TextFieldAssist.UnderlineBrush" Value="Purple"/>
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding XPathIsIncorrect, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+											 Value="True">
+									<Setter Property="materialDesign:TextFieldAssist.UnderlineBrush" Value="Red"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBox.Style>
+				</TextBox>
+				<TextBlock Text="XPath содержит ошибку!"
+						   FontSize="11"
+						   Foreground="Red">
+					<TextBlock.Style>
+						<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignTextBlock}">
+							<Setter Property="Visibility" Value="Collapsed"/>
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding XPathIsIncorrect, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
+									<Setter Property="Visibility" Value="Visible"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+			</StackPanel>
 
 			<Button Grid.Column="2" 
 					VerticalAlignment="Center" 

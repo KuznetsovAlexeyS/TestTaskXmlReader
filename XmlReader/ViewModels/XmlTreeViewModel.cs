@@ -46,16 +46,32 @@ namespace XmlReader.ViewModels
 			XmlTreeModel = new XmlTreeModel();
 		}
 
-		public void LoadDocument(string path)
+		public bool LoadDocument(string path)
 		{
-			XmlTreeModel.LoadDocument(path);
-			RaisePropertyChanged(nameof(XmlDocument));
+			try
+			{
+				XmlTreeModel.LoadDocument(path);
+				RaisePropertyChanged(nameof(XmlDocument));
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
 		}
 
-		public void ApplyXPathRequest(string XPathRequest)
+		public bool ApplyXPathRequest(string XPathRequest)
 		{
-			IsInSearchMode = true;
-			XPathSearchResult = XmlDocument.SelectNodes(XPathRequest);
+			try
+			{
+				IsInSearchMode = true;
+				XPathSearchResult = XmlDocument.SelectNodes(XPathRequest);
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
 		}
 
 		public void DeleteXPathRequest()
