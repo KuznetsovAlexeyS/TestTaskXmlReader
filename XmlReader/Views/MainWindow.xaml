@@ -10,14 +10,14 @@
 		DataContext="{StaticResource MainWindowViewModel}">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="60"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		<Grid Grid.Row="0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="60"/>
 				<ColumnDefinition Width="280"/>
-				<ColumnDefinition Width="160"/>
+				<ColumnDefinition Width="120"/>
 			</Grid.ColumnDefinitions>
 
 			<Button Grid.Column="0"
@@ -28,10 +28,11 @@
 					Content="{materialDesign:PackIcon FolderOpen}"/>
 
 			<!-- XPath text field and little hidden error message below -->
-			<StackPanel HorizontalAlignment="Center"
-						Grid.Column="1">
-				<TextBox HorizontalAlignment="Center"
-						 Height="30" 
+			<StackPanel Grid.Column="1"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						Margin="0 18 0 0">
+				<TextBox Height="30" 
 						 Width="240"
 						 FontSize="16"
 						 Text="{Binding XPathRequest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -52,11 +53,11 @@
 					</TextBox.Style>
 				</TextBox>
 				<TextBlock Text="XPath содержит ошибку!"
-						   FontSize="11"
+						   FontSize="9"
 						   Foreground="Red">
 					<TextBlock.Style>
 						<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignTextBlock}">
-							<Setter Property="Visibility" Value="Collapsed"/>
+							<Setter Property="Visibility" Value="Hidden"/>
 							<Style.Triggers>
 								<DataTrigger Binding="{Binding XPathIsIncorrect, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
 									<Setter Property="Visibility" Value="Visible"/>
@@ -69,7 +70,7 @@
 
 			<Button Grid.Column="2" 
 					VerticalAlignment="Center" 
-					HorizontalAlignment="Left"
+					HorizontalAlignment="Center"
 					Height="30" 
 					Command="{Binding ApplyXPathRequestCommand, Mode=OneWay}">
 				<Button.Content>
